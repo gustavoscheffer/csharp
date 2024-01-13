@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 public class Cat : Pet
 {
 

@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 public class Person
 {
     private string firstName;

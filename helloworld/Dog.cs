@@ -1,14 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
 public class Dog : Pet
 {
     public Dog(string firstname) : base(firstname) { }

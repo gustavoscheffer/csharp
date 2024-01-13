@@ -1,4 +1,4 @@
- abstract class Pet
+ public abstract class Pet
 {
 
     private string first;

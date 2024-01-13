@@ -1,8 +1,30 @@
 {
 	"folders": [
 		{
-			"path": "."
-		}
+			"name": "helloworld",
+			"path": "helloworld",
+		},
+		{
+			"name": "MyFirstProject",
+			"path": "MyFirstProject"
+		},
+		{
+			"name": "PizzaStore",
+			"path": "PizzaStore"
+		},
+		{
+			"name": "WebAPIClient",
+			"path": "WebAPIClient"
+		},
 	],
-	"settings": {}
+	"settings": {
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [],
+		"compounds": [
+			{
+			}
+		]
+	}
 }
