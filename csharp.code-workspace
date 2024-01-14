@@ -16,6 +16,10 @@
 			"name": "WebAPIClient",
 			"path": "WebAPIClient"
 		},
+		{
+			"name": "Bank",
+			"path": "Bank"
+		},
 	],
 	"settings": {
 	},
