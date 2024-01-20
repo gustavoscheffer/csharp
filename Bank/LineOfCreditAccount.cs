@@ -2,7 +2,7 @@ using Bank;
 
 public class LineOfCreditAccount : BankAccount
 {
-    public LineOfCreditAccount(string name, decimal amount) : base(name, amount)
+    public LineOfCreditAccount(string name, decimal initialBalance, decimal creditLimit) : base(name, -creditLimit)
     {
 
     }
@@ -15,4 +15,10 @@ public class LineOfCreditAccount : BankAccount
             MakeWithdrawal(interest, DateTime.Now, "Charge monthly interest");
         }
     }
+
+    protected override Transaction? CheckWithdrawalLimit(bool isOverdrawn) =>
+        isOverdrawn
+        ? new Transaction(-20, DateTime.Now, "Apply overdraft fee")
+        : default;
+
 }

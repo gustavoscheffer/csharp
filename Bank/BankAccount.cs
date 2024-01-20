@@ -4,6 +4,9 @@ public abstract class BankAccount
 {
 
     private static int s_accountNumberSeed = 123456789;
+    private List<Transaction> _allTransactions = new List<Transaction>();
+    private readonly decimal _minimumBalance;
+
     public string Number { get; }
     public string Owner { get; }
     public decimal Balance
@@ -20,16 +23,20 @@ public abstract class BankAccount
     }
 
 
-    public BankAccount(string name, decimal initialBalance)
+    public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+
+    public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
     {
-        Owner = name;
-        MakeDeposit(initialBalance, DateTime.Now, "Intial balance");
 
         Number = s_accountNumberSeed.ToString();
         s_accountNumberSeed++;
-    }
+        Owner = name;
+        if (initialBalance > 0)
+        {
+            MakeDeposit(initialBalance, DateTime.Now, "Intial balance");
+        }
 
-    private List<Transaction> _allTransactions = new List<Transaction>();
+    }
 
     public void MakeDeposit(decimal amount, DateTime date, string note)
     {
@@ -40,15 +47,35 @@ public abstract class BankAccount
 
         _allTransactions.Add(new Transaction(amount, date, note));
     }
+
     public void MakeWithdrawal(decimal amount, DateTime date, string note)
     {
-        if (Balance - amount < 0)
+        if (amount <= _minimumBalance)
         {
             throw new ArgumentOutOfRangeException(nameof(amount), "Not sufficient funds for this withdrawal");
         }
-        _allTransactions.Add(new Transaction(-amount, DateTime.Now, note));
+        Transaction? overdraftTransaction = CheckWithdrawalLimit(Balance - amount < _minimumBalance);
+
+        Transaction? withdrawal = new(-amount, date, note);
+        _allTransactions.Add(withdrawal);
+
+        if (overdraftTransaction != null)
+            _allTransactions.Add(overdraftTransaction);
+
 
     }
+    protected virtual Transaction? CheckWithdrawalLimit(bool isOverdrawn)
+    {
+        if (isOverdrawn)
+        {
+            throw new InvalidOperationException("Not sufficient funds for this withdrawal");
+        }
+        else
+        {
+            return default;
+        }
+    }
+
 
     public string GetAccountHistory()
     {
