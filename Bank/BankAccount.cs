@@ -1,6 +1,6 @@
 namespace Bank;
 
-public class BankAccount
+public abstract class BankAccount
 {
 
     private static int s_accountNumberSeed = 123456789;
@@ -63,5 +63,10 @@ public class BankAccount
         }
 
         return report.ToString();
+    }
+
+    public virtual void PerformMonthEndTransactions()
+    {
+
     }
 }
